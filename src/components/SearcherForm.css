@@ -1,0 +1,20 @@
+.searcher-form {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+.searcher-form h3 {
+  margin-bottom: 0px;
+  font-weight: 900;
+}
+
+.searcher-form p {
+  font-size: 14px;
+  margin-top: 0px;
+  color: grey;
+}
+
+.search-header {
+  width: 30%;
+}
