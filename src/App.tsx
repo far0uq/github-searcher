@@ -1,4 +1,4 @@
-import SearcherForm from "./components/SearcherForm";
+import SearcherForm from "./pages/SearcherForm";
 
 function App() {
   return (

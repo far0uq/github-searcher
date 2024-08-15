@@ -1,7 +1,7 @@
 import { Switch, Flex } from "antd";
 import "./SearcherForm.css";
-import SearchBar from "./SearchBar";
-import SearchHeader from "./SearchHeader";
+import SearchBar from "../components/SearchBar";
+import SearchHeader from "../components/SearchHeader";
 // import { useState } from "react";
 // import { Octokit } from "octokit";
 // import { User } from "../types/user";
@@ -9,7 +9,6 @@ import SearchHeader from "./SearchHeader";
 function SearcherForm() {
   // const [darkMode, setDarkMode] = useState(false);
   // const [users, setUsers] = useState<User[]>([]);
-
 
   // const switchStyle = {
   //   border: "1px solid black",
