@@ -2,20 +2,23 @@ import { Input, Select, Flex, Form } from "antd";
 import "./SearchBar.css";
 import { fetchUsers } from "../api/fetchUsers";
 
-interface formValues {
+const querytypeUser = "users";
+const querytypeRepos = "repositories";
+
+interface FormValues {
   search_query: string;
   search_type: string;
 }
 
-function SearchBar() {
+function SearchBar({ darkModeIsOn }: { darkModeIsOn: boolean }) {
   const [form] = Form.useForm();
 
   const handleInputChange = (
-    changedFields: Partial<formValues>,
-    allFields: formValues
+    changedFields: Partial<FormValues>,
+    allFields: FormValues
   ) => {
     try {
-      if (allFields.search_type == "users") {
+      if (allFields.search_type == querytypeUser) {
         const query = allFields.search_query;
         fetchUsers(query);
       }
@@ -25,10 +28,20 @@ function SearchBar() {
   };
 
   return (
-    <Form className="search-bar" form={form} onValuesChange={handleInputChange}>
+    <Form
+      className="search-bar"
+      form={form}
+      // onValuesChange={handleInputChange}
+    >
       <Flex justify="space-between">
         <Form.Item name="search-query">
-          <Input placeholder="Start typing to search .." />
+          <Input
+            style={{
+              backgroundColor: "transparent",
+              color: darkModeIsOn ? "white" : "black",
+            }}
+            placeholder="Start typing to search .."
+          />
         </Form.Item>
         <Form.Item name="search-type">
           <Select

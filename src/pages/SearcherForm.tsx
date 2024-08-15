@@ -2,44 +2,38 @@ import { Switch, Flex } from "antd";
 import "./SearcherForm.css";
 import SearchBar from "../components/SearchBar";
 import SearchHeader from "../components/SearchHeader";
-// import { useState } from "react";
-// import { Octokit } from "octokit";
-// import { User } from "../types/user";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../state/store";
+import { toggleDarkMode } from "../state/darkmode/darkModeSlice";
 
 function SearcherForm() {
-  // const [darkMode, setDarkMode] = useState(false);
-  // const [users, setUsers] = useState<User[]>([]);
-
-  // const switchStyle = {
-  //   border: "1px solid black",
-  // };
-  // const darkSwitchStyle = {
-  //   backgroundColor: "black",
-  // };
-  // const lightSwitchStyle = {
-  //   backgroundColor: "white",
-  // };
-
-  // const currentSwitchStyle = {
-  //   ...switchStyle,
-  //   ...(darkMode ? darkSwitchStyle : lightSwitchStyle),
-  // };
+  const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
+  const dispatch = useDispatch();
 
   return (
-    <Flex justify="center" align="center" className="searcher-form" vertical>
+    <Flex
+      justify="center"
+      align="center"
+      className="searcher-form"
+      vertical
+      style={
+        darkModeIsOn
+          ? { backgroundColor: "black" }
+          : { backgroundColor: "white" }
+      }
+    >
       <Flex align="center" justify="space-between" className="search-header">
-        <SearchHeader />
+        <SearchHeader darkModeIsOn={darkModeIsOn} />
 
         <Switch
-          // style={{ ...currentSwitchStyle }}
-          // onChange={() => setDarkMode(!darkMode)}
           checkedChildren="Dark"
           unCheckedChildren="Light"
           size="default"
+          onChange={() => dispatch(toggleDarkMode())}
         />
       </Flex>
 
-      <SearchBar />
+      <SearchBar darkModeIsOn={darkModeIsOn} />
 
       {/* {users.map((user) => (
         <Card>
