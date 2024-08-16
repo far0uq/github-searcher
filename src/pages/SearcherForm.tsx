@@ -26,6 +26,10 @@ function SearcherForm() {
         <SearchHeader darkModeIsOn={darkModeIsOn} />
 
         <Switch
+          style={{
+            fontWeight: "bold",
+          }}
+          className={darkModeIsOn ? "switch-dark" : "switch-light"}
           checkedChildren="Dark"
           unCheckedChildren="Light"
           size="default"

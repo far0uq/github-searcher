@@ -36,10 +36,7 @@ function SearchBar({ darkModeIsOn }: { darkModeIsOn: boolean }) {
       <Flex justify="space-between">
         <Form.Item name="search-query">
           <Input
-            style={{
-              backgroundColor: "transparent",
-              color: darkModeIsOn ? "white" : "black",
-            }}
+            className="search-query"
             placeholder="Start typing to search .."
           />
         </Form.Item>
