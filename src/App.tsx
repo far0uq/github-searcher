@@ -1,7 +1,7 @@
-import SearcherForm from "./pages/SearcherForm";
 import { ConfigProvider, theme } from "antd";
 import { useSelector } from "react-redux";
-import { RootState } from "./state/store";
+import { RootState } from "./state/store"
+import SearcherForm from "./pages/SearcherForm";
 
 function App() {
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);

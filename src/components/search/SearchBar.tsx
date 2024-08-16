@@ -1,26 +1,33 @@
 import { Input, Select, Flex, Form } from "antd";
 import "./SearchBar.css";
-import { fetchUsers } from "../api/fetchUsers";
+import { fetchUsers } from "../../api/fetchUsers";
+import { useDispatch } from "react-redux";
 
 const querytypeUser = "users";
-const querytypeRepos = "repositories";
 
 interface FormValues {
   search_query: string;
   search_type: string;
 }
 
-function SearchBar({ darkModeIsOn }: { darkModeIsOn: boolean }) {
+function SearchBar() {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
-  const handleInputChange = (
+  const handleInputChange = async (
     changedFields: Partial<FormValues>,
     allFields: FormValues
   ) => {
+    console.log(allFields);
     try {
       if (allFields.search_type == querytypeUser) {
-        const query = allFields.search_query;
-        fetchUsers(query);
+        console.log("searching for users");
+        if (allFields.search_query.length >= 3) {
+          const query = allFields.search_query;
+          const users = await fetchUsers(query);
+          dispatch({ type: "users/setUsers", payload: users?.items });
+          console.log(users);
+        }
       }
     } catch (e) {
       console.log(e);
@@ -28,19 +35,15 @@ function SearchBar({ darkModeIsOn }: { darkModeIsOn: boolean }) {
   };
 
   return (
-    <Form
-      className="search-bar"
-      form={form}
-      // onValuesChange={handleInputChange}
-    >
+    <Form className="search-bar" form={form} onValuesChange={handleInputChange}>
       <Flex justify="space-between">
-        <Form.Item name="search-query">
+        <Form.Item name="search_query">
           <Input
             className="search-query"
             placeholder="Start typing to search .."
           />
         </Form.Item>
-        <Form.Item name="search-type">
+        <Form.Item name="search_type">
           <Select
             placeholder="Users"
             options={[
