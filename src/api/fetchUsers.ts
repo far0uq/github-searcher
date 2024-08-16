@@ -1,6 +1,6 @@
 import { Octokit } from "octokit";
 
-export async function fetchUsers(username: string) {
+export async function fetchUsers(username: string) {  
   const octokit = new Octokit({
     auth: import.meta.env.API_TOKEN,
   });
@@ -9,11 +9,7 @@ export async function fetchUsers(username: string) {
     const resp = await octokit.request("GET /search/users", {
       q: username,
     });
-
-    const logins: User[] = resp.data.items;
-
-    console.log(logins);
-    setUsers(logins);
+    return resp.data;
   } catch (error) {
     console.error(error);
   }
