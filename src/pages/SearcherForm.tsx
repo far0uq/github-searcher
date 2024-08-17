@@ -12,6 +12,8 @@ function SearcherForm() {
   const users = useSelector((state: RootState) => state.users.users);
   const dispatch = useDispatch();
 
+  console.log("IN SearchBar", users);
+
   return (
     <div>
       <Flex
@@ -43,6 +45,7 @@ function SearcherForm() {
         <SearchBar />
       </Flex>
       <Space size="large" />
+
       <UserContainer users={users} />
     </div>
   );

@@ -1,7 +1,7 @@
 import { Input, Select, Flex, Form } from "antd";
 import "./SearchBar.css";
 import { fetchUsers } from "../../api/fetchUsers";
-import { useDispatch } from "react-redux";
+import useDebounce from "../../hooks/useDebounce";
 
 const querytypeUser = "users";
 
@@ -12,7 +12,8 @@ interface FormValues {
 
 function SearchBar() {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
+  const { debounceFetch } = useDebounce();
+  const debouncedFunc = debounceFetch(fetchUsers, 3000);
 
   const handleInputChange = async (
     changedFields: Partial<FormValues>,
@@ -21,12 +22,10 @@ function SearchBar() {
     console.log(allFields);
     try {
       if (allFields.search_type == querytypeUser) {
-        console.log("searching for users");
         if (allFields.search_query.length >= 3) {
+          console.log("searching for users");
           const query = allFields.search_query;
-          const users = await fetchUsers(query);
-          dispatch({ type: "users/setUsers", payload: users?.items });
-          console.log(users);
+          debouncedFunc(query);
         }
       }
     } catch (e) {

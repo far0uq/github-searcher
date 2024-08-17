@@ -5,9 +5,11 @@ import { Flex } from "antd";
 function UserContainer({ users }: { users: Array<User> }) {
   return (
     <Flex wrap gap="small">
-      {users.map((user) => (
-        <UserCard user={user} />
-      ))}
+      {users ? (
+        users.map((user) => <UserCard key={user.id} user={user} />)
+      ) : (
+        <div>loading users...</div>
+      )}
     </Flex>
   );
 }
