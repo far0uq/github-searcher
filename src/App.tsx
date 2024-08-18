@@ -1,7 +1,7 @@
 import { ConfigProvider, theme } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "./state/store";
-import RepoCard from "./components/cards/RepoCard";
+import SearcherForm from "./pages/SearcherForm";
 
 function App() {
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
@@ -30,7 +30,7 @@ function App() {
           },
         }}
       >
-        <RepoCard />
+        <SearcherForm />
       </ConfigProvider>
     </>
   );

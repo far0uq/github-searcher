@@ -5,14 +5,13 @@ import SearchHeader from "../components/search/SearchHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { toggleDarkMode } from "../state/darkmode/darkModeSlice";
-import UserContainer from "../components/containers/UserContainer";
+import { useState } from "react";
+import ResultContainer from "../components/containers/ResultContainer";
 
 function SearcherForm() {
+  const [searchType, setSearchType] = useState("");
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
-  const users = useSelector((state: RootState) => state.users.users);
   const dispatch = useDispatch();
-
-  console.log("IN SearchBar", users);
 
   return (
     <div>
@@ -42,11 +41,11 @@ function SearcherForm() {
           />
         </Flex>
 
-        <SearchBar />
+        <SearchBar searchType={searchType} setSearchType={setSearchType} />
       </Flex>
       <Space size="large" />
 
-      <UserContainer users={users} />
+      <ResultContainer searchType={searchType} />
     </div>
   );
 }

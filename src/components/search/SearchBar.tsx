@@ -1,19 +1,41 @@
 import { Input, Select, Flex, Form } from "antd";
 import "./SearchBar.css";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../api/fetchUsers";
+import { fetchRepos } from "../../api/fetchRepos";
 import useDebounce from "../../hooks/useDebounce";
+import { RootState } from "../../state/store";
 
 const querytypeUser = "users";
+const querytypeRepo = "repositories";
 
 interface FormValues {
   search_query: string;
   search_type: string;
 }
 
-function SearchBar() {
+function SearchBar({
+  searchType,
+  setSearchType,
+}: {
+  searchType: string;
+  setSearchType: (searchType: string) => void;
+}) {
   const [form] = Form.useForm();
   const { debounceFetch } = useDebounce();
-  const debouncedFunc = debounceFetch(fetchUsers, 3000);
+
+  let debouncedFunc: (
+    query: string
+  ) => Promise<void> | undefined = async () => {};
+
+  if (searchType === querytypeUser)
+    debouncedFunc = debounceFetch(fetchUsers, 3000);
+  else if (searchType === querytypeRepo)
+    debouncedFunc = debounceFetch(fetchRepos, 3000);
+
+  const dispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.users.users);
+  const repos = useSelector((state: RootState) => state.repos.repos);
 
   const handleInputChange = async (
     changedFields: Partial<FormValues>,
@@ -21,13 +43,22 @@ function SearchBar() {
   ) => {
     console.log(allFields);
     try {
-      if (allFields.search_type == querytypeUser) {
-        if (allFields.search_query.length >= 3) {
-          console.log("searching for users");
-          const query = allFields.search_query;
-          debouncedFunc(query);
+      if (allFields.search_query.length < 3) {
+        if (users.length > 0) {
+          dispatch({ type: "users/clearUsers" });
         }
+        if (repos.length > 0) {
+          dispatch({ type: "repos/clearRepos" });
+        }
+      } else if (allFields.search_type == querytypeUser) {
+        setSearchType(querytypeUser);
+        console.log("searching for users");
+      } else if (allFields.search_type == querytypeRepo) {
+        setSearchType(querytypeRepo);
+        console.log("searching for repositories");
       }
+      const query = allFields.search_query;
+      debouncedFunc(query);
     } catch (e) {
       console.log(e);
     }
