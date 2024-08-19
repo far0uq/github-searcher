@@ -1,11 +1,11 @@
 import { Input, Select, Flex, Form } from "antd";
 import "./SearchBar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../api/fetchUsers";
-import { fetchRepos } from "../../api/fetchRepos";
 import useDebounce from "../../hooks/useDebounce";
 import { RootState } from "../../state/store";
-import { useState } from "react";
+import React from "react";
+import lodash from "lodash";
+import fetchData from "../../api/fetchAPI";
 
 const querytypeUser = "users";
 const querytypeRepo = "repositories";
@@ -15,19 +15,18 @@ interface FormValues {
   search_type: string;
 }
 
-function SearchBar({
-  searchType,
-  setSearchType,
+const SearchBar = React.memo(function SearchBar({
+  setSearchTypeMemoized,
 }: {
-  searchType: string;
-  setSearchType: (searchType: string) => void;
+  setSearchTypeMemoized: (searchType: string) => void;
 }) {
+  console.log("RE-rendering SearchBar");
   const [form] = Form.useForm();
   const { debounceFetch } = useDebounce();
 
-  let debouncedFunc: (
-    query: string
-  ) => Promise<void> | undefined = async () => {};
+  const debouncedFunc: lodash.DebouncedFunc<
+    (query: string, queryType: string) => Promise<void>
+  > = debounceFetch(fetchData, 4000);
 
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.users.users);
@@ -40,23 +39,26 @@ function SearchBar({
     console.log(allFields);
     try {
       if (allFields.search_query.length < 3) {
+        console.log("Cancellation triggered");
+        debouncedFunc("cancel", allFields.search_type);
+
         if (users.length > 0) {
           dispatch({ type: "users/clearUsers" });
         }
         if (repos.length > 0) {
           dispatch({ type: "repos/clearRepos" });
         }
-      } else if (allFields.search_type == querytypeUser) {
-        debouncedFunc = debounceFetch(fetchUsers, 3000);
-        setSearchType(querytypeUser);
-        console.log("searching for users");
-      } else if (allFields.search_type == querytypeRepo) {
-        debouncedFunc = debounceFetch(fetchRepos, 3000);
-        setSearchType(querytypeRepo);
-        console.log("searching for repositories");
+      } else {
+        if (allFields.search_type == querytypeUser) {
+          console.log("searching for users");
+          setSearchTypeMemoized(querytypeUser);
+        } else if (allFields.search_type == querytypeRepo) {
+          console.log("searching for repositories");
+          setSearchTypeMemoized(querytypeRepo);
+        }
+        const query = allFields.search_query;
+        debouncedFunc(query, allFields.search_type);
       }
-      const query = allFields.search_query;
-      debouncedFunc(query);
     } catch (e) {
       console.log(e);
     }
@@ -83,6 +85,6 @@ function SearchBar({
       </Flex>
     </Form>
   );
-}
+});
 
 export default SearchBar;

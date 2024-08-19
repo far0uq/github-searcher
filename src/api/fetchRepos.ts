@@ -1,10 +1,7 @@
 import { Octokit } from "octokit";
 import { Repo } from "../interface/repoInterface";
 
-export async function fetchRepos(query: string) {
-  const octokit = new Octokit({
-    auth: import.meta.env.API_TOKEN,
-  });
+export async function fetchRepos(query: string, octokit: Octokit) {
   try {
     const resp = await octokit.request("GET /search/repositories", {
       q: query,

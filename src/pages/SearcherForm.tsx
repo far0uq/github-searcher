@@ -5,13 +5,17 @@ import SearchHeader from "../components/search/SearchHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { toggleDarkMode } from "../state/darkmode/darkModeSlice";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ResultContainer from "../components/containers/ResultContainer";
 
 function SearcherForm() {
   const [searchType, setSearchType] = useState("");
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
   const dispatch = useDispatch();
+
+  const setSearchTypeMemoized = useCallback((newSearchType: string) => {
+    if (searchType !== newSearchType) setSearchType(newSearchType);
+  }, []);
 
   return (
     <div>
@@ -41,7 +45,7 @@ function SearcherForm() {
           />
         </Flex>
 
-        <SearchBar searchType={searchType} setSearchType={setSearchType} />
+        <SearchBar setSearchTypeMemoized={setSearchTypeMemoized} />
       </Flex>
       <Space size="large" />
 

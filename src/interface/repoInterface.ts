@@ -15,6 +15,6 @@ export interface Repo {
   updated_at: string;
 }
 
-export function isRepoInstance(repo: Repo | User): repo is Repo {
-  return (repo as Repo).stargazers_count !== undefined;
+export function isRepoInstance(result: Repo | User): result is Repo {
+  return (result as Repo).stargazers_count !== undefined;
 }

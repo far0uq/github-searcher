@@ -1,10 +1,7 @@
 import { Octokit } from "octokit";
 import User from "../interface/userInterface";
 
-export async function fetchUsers(username: string) {
-  const octokit = new Octokit({
-    auth: import.meta.env.API_TOKEN,
-  });
+export async function fetchUsers(username: string, octokit: Octokit) {
   try {
     const resp = await octokit.request("GET /search/users", {
       q: username,
