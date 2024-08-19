@@ -1,19 +1,13 @@
 import { Switch, Flex, Space } from "antd";
 import "./SearcherForm.css";
-import SearchBar from "../components/search/SearchBar";
-import SearchHeader from "../components/search/SearchHeader";
+import SearchBar from "./SearchBar";
+import SearchHeader from "./SearchHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../state/store";
-import { toggleDarkMode } from "../state/darkmode/darkModeSlice";
-import { useCallback, useState } from "react";
+import { RootState } from "../../state/store";
+import { toggleDarkMode } from "../../state/darkmode/darkModeSlice";
 function SearcherForm() {
-  const [searchType, setSearchType] = useState("");
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
   const dispatch = useDispatch();
-
-  const setSearchTypeMemoized = useCallback((newSearchType: string) => {
-    if (searchType !== newSearchType) setSearchType(newSearchType);
-  }, []);
 
   return (
     <div>
