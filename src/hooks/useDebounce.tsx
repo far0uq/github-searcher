@@ -18,7 +18,7 @@ function useDebounce(): {
       try {
         const result = await callback(query);
         // Check type of result before storing to either users or repos
-        console.log(result);
+        console.log(result[0]);
         if (isRepoInstance(result[0])) {
           console.log("setting repos");
           dispatch({ type: "repos/setRepos", payload: result });

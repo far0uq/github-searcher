@@ -5,6 +5,7 @@ import { fetchUsers } from "../../api/fetchUsers";
 import { fetchRepos } from "../../api/fetchRepos";
 import useDebounce from "../../hooks/useDebounce";
 import { RootState } from "../../state/store";
+import { useState } from "react";
 
 const querytypeUser = "users";
 const querytypeRepo = "repositories";
@@ -28,11 +29,6 @@ function SearchBar({
     query: string
   ) => Promise<void> | undefined = async () => {};
 
-  if (searchType === querytypeUser)
-    debouncedFunc = debounceFetch(fetchUsers, 3000);
-  else if (searchType === querytypeRepo)
-    debouncedFunc = debounceFetch(fetchRepos, 3000);
-
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.users.users);
   const repos = useSelector((state: RootState) => state.repos.repos);
@@ -51,9 +47,11 @@ function SearchBar({
           dispatch({ type: "repos/clearRepos" });
         }
       } else if (allFields.search_type == querytypeUser) {
+        debouncedFunc = debounceFetch(fetchUsers, 3000);
         setSearchType(querytypeUser);
         console.log("searching for users");
       } else if (allFields.search_type == querytypeRepo) {
+        debouncedFunc = debounceFetch(fetchRepos, 3000);
         setSearchType(querytypeRepo);
         console.log("searching for repositories");
       }
