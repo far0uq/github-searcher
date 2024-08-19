@@ -2,6 +2,7 @@ import { ConfigProvider, theme } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "./state/store";
 import SearcherForm from "./pages/SearcherForm";
+import ResultContainer from "./components/containers/ResultContainer";
 
 function App() {
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
@@ -31,6 +32,7 @@ function App() {
         }}
       >
         <SearcherForm />
+        <ResultContainer />
       </ConfigProvider>
     </>
   );

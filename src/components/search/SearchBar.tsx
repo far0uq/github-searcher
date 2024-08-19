@@ -6,6 +6,10 @@ import { RootState } from "../../state/store";
 import React from "react";
 import lodash from "lodash";
 import fetchData from "../../api/fetchAPI";
+import {
+  setQueryTypeRepos,
+  setQueryTypeUsers,
+} from "../../state/query/querySlice";
 
 const querytypeUser = "users";
 const querytypeRepo = "repositories";
@@ -15,11 +19,7 @@ interface FormValues {
   search_type: string;
 }
 
-const SearchBar = React.memo(function SearchBar({
-  setSearchTypeMemoized,
-}: {
-  setSearchTypeMemoized: (searchType: string) => void;
-}) {
+const SearchBar = React.memo(function SearchBar() {
   console.log("RE-rendering SearchBar");
   const [form] = Form.useForm();
   const { debounceFetch } = useDebounce();
@@ -51,10 +51,10 @@ const SearchBar = React.memo(function SearchBar({
       } else {
         if (allFields.search_type == querytypeUser) {
           console.log("searching for users");
-          setSearchTypeMemoized(querytypeUser);
+          dispatch(setQueryTypeUsers());
         } else if (allFields.search_type == querytypeRepo) {
           console.log("searching for repositories");
-          setSearchTypeMemoized(querytypeRepo);
+          dispatch(setQueryTypeRepos());
         }
         const query = allFields.search_query;
         debouncedFunc(query, allFields.search_type);

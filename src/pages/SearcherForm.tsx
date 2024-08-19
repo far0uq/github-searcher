@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { toggleDarkMode } from "../state/darkmode/darkModeSlice";
 import { useCallback, useState } from "react";
-import ResultContainer from "../components/containers/ResultContainer";
-
 function SearcherForm() {
   const [searchType, setSearchType] = useState("");
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
@@ -45,11 +43,9 @@ function SearcherForm() {
           />
         </Flex>
 
-        <SearchBar setSearchTypeMemoized={setSearchTypeMemoized} />
+        <SearchBar />
       </Flex>
       <Space size="large" />
-
-      <ResultContainer searchType={searchType} />
     </div>
   );
 }
