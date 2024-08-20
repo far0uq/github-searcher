@@ -1,18 +1,11 @@
 import { Avatar, Button, Card, Divider } from "antd";
 import Meta from "antd/es/card/Meta";
-
-interface User {
-  avatar_url: string;
-  login: string;
-  name: string;
-  location: string;
-  html_url: string;
-}
+import User from "../../interface/userInterface";
 
 function UserCard({ user }: { user: Partial<User> }) {
   return (
     <div>
-      <Card style={{ width: 300, textAlign: "center" }}>
+      <Card style={{ textAlign: "center", borderRadius: 10 }}>
         <Avatar src={user.avatar_url} size={90} />
         <Divider />
         <Meta title={user.login} description={user.name} />

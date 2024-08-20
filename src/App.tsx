@@ -1,10 +1,11 @@
 import { ConfigProvider, theme } from "antd";
 import { useSelector } from "react-redux";
-import { RootState } from "./state/store"
-import SearcherForm from "./pages/SearcherForm";
+import { RootState } from "./state/store";
+import GithubSearch from "./pages/GithubSearch";
 
 function App() {
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
+
   return (
     <>
       {/* ConfigProvider for Ant Design Components */}
@@ -30,7 +31,7 @@ function App() {
           },
         }}
       >
-        <SearcherForm />
+        <GithubSearch />
       </ConfigProvider>
     </>
   );

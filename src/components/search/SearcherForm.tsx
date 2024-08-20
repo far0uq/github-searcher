@@ -1,18 +1,13 @@
 import { Switch, Flex, Space } from "antd";
 import "./SearcherForm.css";
-import SearchBar from "../components/search/SearchBar";
-import SearchHeader from "../components/search/SearchHeader";
+import SearchBar from "./SearchBar";
+import SearchHeader from "./SearchHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../state/store";
-import { toggleDarkMode } from "../state/darkmode/darkModeSlice";
-import UserContainer from "../components/containers/UserContainer";
-
+import { RootState } from "../../state/store";
+import { toggleDarkMode } from "../../state/darkmode/darkModeSlice";
 function SearcherForm() {
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
-  const users = useSelector((state: RootState) => state.users.users);
   const dispatch = useDispatch();
-
-  console.log("IN SearchBar", users);
 
   return (
     <div>
@@ -45,8 +40,6 @@ function SearcherForm() {
         <SearchBar />
       </Flex>
       <Space size="large" />
-
-      <UserContainer users={users} />
     </div>
   );
 }
