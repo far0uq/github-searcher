@@ -10,10 +10,13 @@ function ResultContainer() {
   const repos = useSelector((state: RootState) => state.repos.repos);
   const queryType = useSelector((state: RootState) => state.query.queryType);
   const darkModeIsOn = useSelector((state: RootState) => state.darkmode.isOn);
+  const dataIsLoading = useSelector(
+    (state: RootState) => state.loading.dataIsLoading
+  );
 
-  if (queryType === "users")
-    if (users.length === 0) return <LoadingUsersContrainer />;
-    else {
+  if (queryType === "users") {
+    if (dataIsLoading) return <LoadingUsersContrainer />;
+    else if (users.length > 0) {
       return (
         <div
           style={
@@ -26,9 +29,9 @@ function ResultContainer() {
         </div>
       );
     }
-  else if (queryType === "repositories")
-    if (repos.length === 0) return <LoadingReposContrainer />;
-    else {
+  } else if (queryType === "repositories") {
+    if (dataIsLoading) return <LoadingReposContrainer />;
+    else if (repos.length > 0) {
       return (
         <div
           style={
@@ -41,6 +44,7 @@ function ResultContainer() {
         </div>
       );
     }
+  }
 }
 
 export default ResultContainer;

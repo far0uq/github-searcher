@@ -39,7 +39,7 @@ const SearchBar = React.memo(function SearchBar() {
     console.log(allFields);
     try {
       if (allFields.search_query.length < 3) {
-        console.log("Cancellation triggered");
+        dispatch({ type: "loading/setDataNotLoading" });
         debouncedFunc("cancel", allFields.search_type);
 
         if (users.length > 0) {
@@ -57,6 +57,7 @@ const SearchBar = React.memo(function SearchBar() {
           dispatch(setQueryTypeRepos());
         }
         const query = allFields.search_query;
+        dispatch({ type: "loading/setDataLoading" });
         debouncedFunc(query, allFields.search_type);
       }
     } catch (e) {

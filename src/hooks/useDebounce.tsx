@@ -38,6 +38,7 @@ function useDebounce(): {
             console.log("setting users");
             dispatch({ type: "users/setUsers", payload: result });
           }
+          dispatch({ type: "loading/setDataNotLoading" });
         } else {
           console.log("cancelled");
         }
