@@ -6,8 +6,8 @@ import { Repo } from "../../interface/repoInterface";
 function RepoCard({ repo }: { repo: Repo }) {
   const { owner } = repo;
   return (
-    <div>
-      <Card style={{ width: "fit-content" }}>
+    <div style={{ width: "50vw" }}>
+      <Card style={{ width: "fit-content", borderRadius: 10 }} bordered={false}>
         <Flex gap="large">
           <UserCard user={owner} />
 

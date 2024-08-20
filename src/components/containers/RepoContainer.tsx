@@ -4,7 +4,7 @@ import { Repo } from "../../interface/repoInterface";
 
 function RepoContainer({ repos }: { repos: Array<Repo> }) {
   return (
-    <Flex wrap gap="small">
+    <Flex wrap gap="large" justify="center">
       {repos ? (
         repos.map((repo) => <RepoCard key={repo.id} repo={repo} />)
       ) : (

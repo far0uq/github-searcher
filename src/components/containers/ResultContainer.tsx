@@ -14,32 +14,36 @@ function ResultContainer() {
     (state: RootState) => state.loading.dataIsLoading
   );
 
+  const commonStyles = {
+    paddingTop: "80px",
+    backgroundColor: darkModeIsOn ? "black" : "white",
+    maxHeight: "50%",
+  };
+
   if (queryType === "users") {
-    if (dataIsLoading) return <LoadingUsersContrainer />;
+    if (dataIsLoading)
+      return (
+        <div style={commonStyles}>
+          <LoadingUsersContrainer />
+        </div>
+      );
     else if (users.length > 0) {
       return (
-        <div
-          style={
-            darkModeIsOn
-              ? { backgroundColor: "black" }
-              : { backgroundColor: "white" }
-          }
-        >
+        <div style={commonStyles}>
           <UserContainer users={users} />
         </div>
       );
     }
   } else if (queryType === "repositories") {
-    if (dataIsLoading) return <LoadingReposContrainer />;
+    if (dataIsLoading)
+      return (
+        <div style={commonStyles}>
+          <LoadingReposContrainer />
+        </div>
+      );
     else if (repos.length > 0) {
       return (
-        <div
-          style={
-            darkModeIsOn
-              ? { backgroundColor: "black" }
-              : { backgroundColor: "white" }
-          }
-        >
+        <div style={commonStyles}>
           <RepoContainer repos={repos} />
         </div>
       );

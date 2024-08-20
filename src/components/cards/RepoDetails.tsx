@@ -4,7 +4,7 @@ import { Repo } from "../../interface/repoInterface";
 
 function RepoDetails({ repo }: { repo: Repo }) {
   return (
-    <Card style={{ fontSize: "13px", alignContent: "center" }}>
+    <Card style={{ fontSize: "13px", alignContent: "center", width: "80%" }}>
       <Flex justify="space-between">
         <Meta title={repo.name} description={repo.full_name} />
         <Button type="primary" href={repo.html_url}>
@@ -14,7 +14,11 @@ function RepoDetails({ repo }: { repo: Repo }) {
 
       <Divider />
       <Flex gap="large">
-        <Meta title="Description" description={repo.description} />
+        <Meta
+          title="Description"
+          description={repo.description}
+          style={{ width: "10%" }}
+        />
         <Meta title="Stars" description={repo.stargazers_count} />
         <Meta title="Watchers" description={repo.watchers_count} />
         <Meta title="Forks" description={repo.forks_count} />

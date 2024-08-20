@@ -1,40 +1,52 @@
-import { Skeleton, Flex } from "antd";
+import { Skeleton, Flex, Row, Col } from "antd";
 
 function LoadingUsersContrainer() {
   return (
-    <Flex justify="center">
-      <Flex justify="space-between" style={{ width: "85%" }}>
-        <Skeleton.Button
-          active={true}
-          size="large"
-          style={{ width: 250, height: 300, borderRadius: 10 }}
-        />
-        <Skeleton.Button
-          active={true}
-          size="large"
-          style={{ width: 250, height: 300, borderRadius: 10 }}
-        />
-        <Skeleton.Button
-          active={true}
-          size="large"
-          style={{ width: 250, height: 300, borderRadius: 10 }}
-        />
-        <Skeleton.Button
-          active={true}
-          size="large"
-          style={{ width: 250, height: 300, borderRadius: 10 }}
-        />
-        <Skeleton.Button
-          active={true}
-          size="large"
-          style={{ width: 250, height: 300, borderRadius: 10 }}
-        />
-        <Skeleton.Button
-          active={true}
-          size="large"
-          style={{ width: 250, height: 300, borderRadius: 10 }}
-        />
-      </Flex>
+    <Flex wrap gap="small" justify="center">
+      <Row gutter={[16, 16]} justify="space-around" style={{ width: "70%" }}>
+        <Col span={4}>
+          <Skeleton.Button
+            active={true}
+            size="large"
+            style={{ width: "11vw", height: 300, borderRadius: 10 }}
+          />
+        </Col>
+        <Col span={4}>
+          <Skeleton.Button
+            active={true}
+            size="large"
+            style={{ width: "11vw", height: 300, borderRadius: 10 }}
+          />
+        </Col>
+        <Col span={4}>
+          <Skeleton.Button
+            active={true}
+            size="large"
+            style={{ width: "11vw", height: 300, borderRadius: 10 }}
+          />
+        </Col>
+        <Col span={4}>
+          <Skeleton.Button
+            active={true}
+            size="large"
+            style={{ width: "11vw", height: 300, borderRadius: 10 }}
+          />
+        </Col>
+        <Col span={4}>
+          <Skeleton.Button
+            active={true}
+            size="large"
+            style={{ width: "11vw", height: 300, borderRadius: 10 }}
+          />
+        </Col>
+        <Col span={4}>
+          <Skeleton.Button
+            active={true}
+            size="large"
+            style={{ width: "11vw", height: 300, borderRadius: 10 }}
+          />
+        </Col>
+      </Row>
     </Flex>
   );
 }
