@@ -1,6 +1,6 @@
 import User from "./userInterface";
 
-export interface Repo {
+export default interface Repo {
   id: number;
   full_name: string;
   name: string;

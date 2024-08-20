@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { Repo } from "../interface/repoInterface";
+import Repo from "../interface/repoInterface";
 
 export async function fetchRepos(query: string, octokit: Octokit) {
   try {

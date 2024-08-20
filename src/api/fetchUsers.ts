@@ -1,10 +1,10 @@
 import { Octokit } from "octokit";
 import User from "../interface/userInterface";
 
-export async function fetchUsers(username: string, octokit: Octokit) {
+export async function fetchUsers(query: string, octokit: Octokit) {
   try {
     const resp = await octokit.request("GET /search/users", {
-      q: username,
+      q: query,
     });
     console.log(resp.data.items);
     return resp.data.items as User[];
