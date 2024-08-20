@@ -48,7 +48,7 @@ const SearchBar = React.memo(function SearchBar() {
         if (repos.length > 0) {
           dispatch({ type: "repos/clearRepos" });
         }
-      } else {
+      } else if(allFields.search_type){
         if (allFields.search_type == querytypeUser) {
           console.log("searching for users");
           dispatch(setQueryTypeUsers());
