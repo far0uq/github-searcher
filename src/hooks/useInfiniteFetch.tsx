@@ -1,12 +1,14 @@
 import { useState } from "react";
 import fetchData from "../api/fetchAPI";
 import User from "../interface/userInterface";
+import Repo from "../interface/repoInterface";
 
 function useInfiniteFetch(): {
   fetchMoreUsers: (
     query: string,
-    previousData: User[]
-  ) => Promise<User[] | undefined>;
+    queryType: string,
+    previousData: (User | Repo)[]
+  ) => Promise<(User | Repo)[] | undefined>;
   hasMore: boolean;
   loading: boolean;
 } {
@@ -16,9 +18,11 @@ function useInfiniteFetch(): {
 
   const fetchMoreUsers = async (
     query: string,
-    previousData: User[]
-  ): Promise<User[] | undefined> => {
+    queryType: string,
+    previousData: (User | Repo)[]
+  ): Promise<(User | Repo)[] | undefined> => {
     console.log("called fetchMore with page ", page);
+
     if (hasMore === false) {
       console.log("No more data");
       return;
@@ -27,12 +31,16 @@ function useInfiniteFetch(): {
     // If more pages exists
     if (loading) return;
     setLoading(true);
-    const newPage = (await fetchData(query, "users", page)) as User[];
+
+    const newPage = queryType
+      ? await fetchData(query, "users", page)
+      : await fetchData(query, "repos", page);
+
     setLoading(false);
     if (newPage && newPage.length > 0) {
-      const newUsers = [...previousData, ...newPage];
+      const newData = [...previousData, ...newPage];
       setPage((prev) => prev + 1);
-      return newUsers;
+      return newData;
     } else if (newPage && newPage.length === 0) {
       setHasMore(false);
     }

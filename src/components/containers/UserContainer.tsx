@@ -15,7 +15,11 @@ function UserContainer({ users }: { users: Array<User> }) {
   const [localUsers, setLocalUsers] = useState(users);
 
   const addUsers = async () => {
-    const moreUsers = await fetchMoreUsers(query, localUsers);
+    const moreUsers = (await fetchMoreUsers(
+      query,
+      "users",
+      localUsers
+    )) as User[];
     if (moreUsers) setLocalUsers(moreUsers);
   };
 

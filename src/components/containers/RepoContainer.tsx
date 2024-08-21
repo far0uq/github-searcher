@@ -1,6 +1,6 @@
 import { Flex } from "antd";
 import RepoCard from "../cards/RepoCard";
-import { Repo } from "../../interface/repoInterface";
+import  Repo from "../../interface/repoInterface";
 
 function RepoContainer({ repos }: { repos: Array<Repo> }) {
   return (
