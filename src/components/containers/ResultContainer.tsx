@@ -24,7 +24,7 @@ function ResultContainer() {
     if (dataIsLoading)
       return (
         <div style={commonStyles}>
-          <LoadingUsersContrainer />
+          <LoadingUsersContrainer rowGap="70%" />
         </div>
       );
     else if (users.length > 0) {

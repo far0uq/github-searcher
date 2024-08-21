@@ -1,9 +1,9 @@
 import { Skeleton, Flex, Row, Col } from "antd";
 
-function LoadingUsersContrainer() {
+function LoadingUsersContrainer({rowGap}: {rowGap:string}) {
   return (
     <Flex wrap gap="small" justify="center">
-      <Row gutter={[16, 16]} justify="space-around" style={{ width: "70%" }}>
+      <Row gutter={[16, 16]} justify="space-around" style={{ width: rowGap}}>
         <Col span={4}>
           <Skeleton.Button
             active={true}

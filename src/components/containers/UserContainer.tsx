@@ -54,7 +54,7 @@ function UserContainer({ users }: { users: Array<User> }) {
             </Col>
           )
         )}
-        {loading && <LoadingUsersContrainer />}
+        {loading && <LoadingUsersContrainer rowGap="100%" />}
       </Row>
     </Flex>
   );
