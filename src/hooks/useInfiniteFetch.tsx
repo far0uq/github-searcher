@@ -7,35 +7,38 @@ function useInfiniteFetch(): {
     query: string,
     previousData: User[]
   ) => Promise<User[] | undefined>;
-  nextPage: () => void;
   hasMore: boolean;
+  loading: boolean;
 } {
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchMoreUsers = async (
     query: string,
     previousData: User[]
   ): Promise<User[] | undefined> => {
-    console.log("called fetchMore");
-    if (hasMore === false) return;
+    console.log("called fetchMore with page ", page);
+    if (hasMore === false) {
+      console.log("No more data");
+      return;
+    }
 
     // If more pages exists
-    const newPage = await fetchData(query, "users", page);
-    if (newPage.length > 0) {
+    if (loading) return;
+    setLoading(true);
+    const newPage = (await fetchData(query, "users", page)) as User[];
+    setLoading(false);
+    if (newPage && newPage.length > 0) {
       const newUsers = [...previousData, ...newPage];
-      setPage(page + 1);
+      setPage((prev) => prev + 1);
       return newUsers;
-    } else {
+    } else if (newPage && newPage.length === 0) {
       setHasMore(false);
     }
   };
 
-  const nextPage = () => {
-    setPage(page + 1);
-  };
-
-  return { fetchMoreUsers, nextPage, hasMore };
+  return { fetchMoreUsers, hasMore, loading };
 }
 
 export default useInfiniteFetch;

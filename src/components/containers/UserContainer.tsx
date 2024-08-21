@@ -6,17 +6,18 @@ import { useEffect, useState } from "react";
 import useInfiniteFetch from "../../hooks/useInfiniteFetch";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
+import LoadingUsersContrainer from "../loading/LoadingUsersContrainer";
 
 function UserContainer({ users }: { users: Array<User> }) {
   const lastElementRef = useRef(null);
   const query = useSelector((state: RootState) => state.query.query);
-  const { fetchMoreUsers } = useInfiniteFetch();
+  const { fetchMoreUsers, loading } = useInfiniteFetch();
   const [localUsers, setLocalUsers] = useState(users);
 
-  const addUsers = useCallback(async () => {
-    const moreUsers = await fetchMoreUsers(query, users);
+  const addUsers = async () => {
+    const moreUsers = await fetchMoreUsers(query, localUsers);
     if (moreUsers) setLocalUsers(moreUsers);
-  }, []);
+  };
 
   useEffect(() => {
     const options = {
@@ -24,6 +25,7 @@ function UserContainer({ users }: { users: Array<User> }) {
     };
 
     const observer = new IntersectionObserver((entries) => {
+      console.log(entries);
       if (entries[0].isIntersecting) {
         addUsers();
       }
@@ -32,7 +34,11 @@ function UserContainer({ users }: { users: Array<User> }) {
     if (lastElementRef.current) {
       observer.observe(lastElementRef.current);
     }
-  }, [addUsers, query, setLocalUsers, fetchMoreUsers]);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [localUsers]);
 
   return (
     <Flex wrap gap="small" justify="center">
@@ -48,6 +54,7 @@ function UserContainer({ users }: { users: Array<User> }) {
             </Col>
           )
         )}
+        {loading && <LoadingUsersContrainer />}
       </Row>
     </Flex>
   );

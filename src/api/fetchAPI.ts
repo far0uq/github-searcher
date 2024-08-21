@@ -10,9 +10,9 @@ export default function fetchData(
   const octokit = new Octokit({
     auth: import.meta.env.API_TOKEN,
   });
-  if (queryType == "users") {
+  if (queryType === "users") {
     return fetchUsers(query, page, octokit);
-  } else if (queryType == "repositories") {
+  } else if (queryType === "repositories") {
     return fetchRepos(query, page, octokit);
   }
 }
