@@ -1,26 +1,41 @@
 import { useState } from "react";
 import fetchData from "../api/fetchAPI";
 import User from "../interface/userInterface";
-import Repo from "../interface/repoInterface";
 
 function useInfiniteFetch(): {
-  fetchMore: (queryType: string, query: string) => Promise<User[] | Repo[]>;
+  fetchMoreUsers: (
+    query: string,
+    previousData: User[]
+  ) => Promise<User[] | undefined>;
+  nextPage: () => void;
+  hasMore: boolean;
 } {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchMore = async (queryType: string, query: string) => {
-    if (hasMore) {
-      if (queryType === "users") {
-        const newPage = await fetchData(query, queryType);
-        return newPage;
-      }
+  const fetchMoreUsers = async (
+    query: string,
+    previousData: User[]
+  ): Promise<User[] | undefined> => {
+    console.log("called fetchMore");
+    if (hasMore === false) return;
+
+    // If more pages exists
+    const newPage = await fetchData(query, "users", page);
+    if (newPage.length > 0) {
+      const newUsers = [...previousData, ...newPage];
       setPage(page + 1);
+      return newUsers;
+    } else {
+      setHasMore(false);
     }
-    return [];
   };
 
-  return { fetchMore };
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+
+  return { fetchMoreUsers, nextPage, hasMore };
 }
 
 export default useInfiniteFetch;

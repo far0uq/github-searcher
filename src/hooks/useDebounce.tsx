@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import User from "../interface/userInterface";
-import { Repo, isRepoInstance } from "../interface/repoInterface";
+import Repo from "../interface/repoInterface";
+import {  isRepoInstance } from "../interface/repoInterface";
 import { useDispatch } from "react-redux";
 
 function useDebounce(): {
