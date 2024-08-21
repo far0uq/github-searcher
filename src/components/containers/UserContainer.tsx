@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import User from "../../interface/userInterface";
 import UserCard from "../cards/UserCard";
 import { Flex, Row, Col } from "antd";
@@ -45,11 +45,11 @@ function UserContainer({ users }: { users: Array<User> }) {
       <Row gutter={[16, 16]} justify="start" style={{ width: "70%" }}>
         {localUsers.map((user, index) =>
           localUsers.length === index + 1 ? (
-            <Col ref={lastElementRef} key={user.id}>
+            <Col ref={lastElementRef} key={user.id} span={4}>
               <UserCard user={user} />
             </Col>
           ) : (
-            <Col key={user.id}>
+            <Col key={user.id} span={4}>
               <UserCard user={user} />
             </Col>
           )

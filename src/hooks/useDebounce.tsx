@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import User from "../interface/userInterface";
 import Repo from "../interface/repoInterface";
-import {  isRepoInstance } from "../interface/repoInterface";
+import { isRepoInstance } from "../interface/repoInterface";
 import { useDispatch } from "react-redux";
 
 function useDebounce(): {
@@ -32,14 +32,18 @@ function useDebounce(): {
           const result = await callback(query, queryType);
           // Check type of result before storing to either users or repos
           console.log(result[0]);
-          if (isRepoInstance(result[0])) {
-            console.log("setting repos");
-            dispatch({ type: "repos/setRepos", payload: result });
+          if (result[0]) {
+            if (isRepoInstance(result[0])) {
+              console.log("setting repos");
+              dispatch({ type: "repos/setRepos", payload: result });
+            } else {
+              console.log("setting users");
+              dispatch({ type: "users/setUsers", payload: result });
+            }
+            dispatch({ type: "loading/setDataNotLoading" });
           } else {
-            console.log("setting users");
-            dispatch({ type: "users/setUsers", payload: result });
+            console.log("no results");
           }
-          dispatch({ type: "loading/setDataNotLoading" });
         } else {
           console.log("cancelled");
         }
