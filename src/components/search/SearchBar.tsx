@@ -7,6 +7,7 @@ import React from "react";
 import lodash from "lodash";
 import fetchData from "../../api/fetchAPI";
 import {
+  setQuery,
   setQueryTypeRepos,
   setQueryTypeUsers,
 } from "../../state/query/querySlice";
@@ -48,7 +49,7 @@ const SearchBar = React.memo(function SearchBar() {
         if (repos.length > 0) {
           dispatch({ type: "repos/clearRepos" });
         }
-      } else if(allFields.search_type){
+      } else if (allFields.search_type) {
         if (allFields.search_type == querytypeUser) {
           console.log("searching for users");
           dispatch(setQueryTypeUsers());
@@ -58,6 +59,7 @@ const SearchBar = React.memo(function SearchBar() {
         }
         const query = allFields.search_query;
         dispatch({ type: "loading/setDataLoading" });
+        dispatch(setQuery(allFields.search_query));
         debouncedFunc(query, allFields.search_type);
       }
     } catch (e) {
