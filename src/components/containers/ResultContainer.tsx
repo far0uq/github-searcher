@@ -38,7 +38,7 @@ function ResultContainer() {
     if (dataIsLoading)
       return (
         <div style={commonStyles}>
-          <LoadingReposContrainer />
+          <LoadingReposContrainer containerWidth="50%" />
         </div>
       );
     else if (repos.length > 0) {

@@ -14,5 +14,7 @@ export default function fetchData(
     return fetchUsers(query, page, octokit);
   } else if (queryType === "repositories") {
     return fetchRepos(query, page, octokit);
+  } else {
+    return Promise.resolve([]);
   }
 }

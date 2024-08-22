@@ -8,14 +8,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import LoadingUsersContrainer from "../loading/LoadingUsersContrainer";
 
-function UserContainer({ users }: { users: Array<User> }) {
+function UserContainer({ users }: { users: User[]}) {
   const lastElementRef = useRef(null);
   const query = useSelector((state: RootState) => state.query.query);
-  const { fetchMoreUsers, loading } = useInfiniteFetch();
+  const { fetchMorePages, loading } = useInfiniteFetch();
   const [localUsers, setLocalUsers] = useState(users);
 
   const addUsers = async () => {
-    const moreUsers = (await fetchMoreUsers(
+    const moreUsers = (await fetchMorePages(
       query,
       "users",
       localUsers

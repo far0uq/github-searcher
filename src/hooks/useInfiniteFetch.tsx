@@ -4,7 +4,7 @@ import User from "../interface/userInterface";
 import Repo from "../interface/repoInterface";
 
 function useInfiniteFetch(): {
-  fetchMoreUsers: (
+  fetchMorePages: (
     query: string,
     queryType: string,
     previousData: (User | Repo)[]
@@ -16,7 +16,7 @@ function useInfiniteFetch(): {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const fetchMoreUsers = async (
+  const fetchMorePages = async (
     query: string,
     queryType: string,
     previousData: (User | Repo)[]
@@ -32,9 +32,10 @@ function useInfiniteFetch(): {
     if (loading) return;
     setLoading(true);
 
-    const newPage = queryType
-      ? await fetchData(query, "users", page)
-      : await fetchData(query, "repos", page);
+    const newPage =
+      queryType === "users"
+        ? await fetchData(query, "users", page)
+        : await fetchData(query, "repositories", page);
 
     setLoading(false);
     if (newPage && newPage.length > 0) {
@@ -46,7 +47,7 @@ function useInfiniteFetch(): {
     }
   };
 
-  return { fetchMoreUsers, hasMore, loading };
+  return { fetchMorePages, hasMore, loading };
 }
 
 export default useInfiniteFetch;
